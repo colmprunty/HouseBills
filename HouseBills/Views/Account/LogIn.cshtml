@@ -1,0 +1,12 @@
+﻿@model HouseBills.Models.LoginModel
+
+<h2>Log In</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.TextBoxFor(x => x.Name)
+
+    <p>
+        <input type="submit" value="Do it!" />
+    </p>
+}

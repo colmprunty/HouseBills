@@ -1,0 +1,53 @@
+﻿@model HouseBills.Models.UserModel
+           
+<h2>Bills Bills Bills</h2>
+
+    @*@Html.ActionLink("Build Database", "BuildDb", "Home")
+    <br/>
+    @Html.ActionLink("Create Person", "CreatePerson", "Home")
+    <br/>*@
+     
+    <table style="width: 900px">
+        <tr >
+            <th>Who</th>
+            <th>How Much</th>
+            <th>For What?</th>
+            <th>Created On</th>
+        </tr>
+        <tr>
+            <td colspan="4" style="text-align: center"><b>I Am Owed</b></td>
+        </tr>
+        @foreach(var debt in Model.DebtsOwedToMe)
+        {
+            using (Html.BeginForm("ReceiveDebt", "Home", new { debtId = debt.Id}))
+            {
+                <tr>
+                    <td>@debt.Debtor.Name</td>
+                    <td>@String.Format("{0:C}", debt.Amount)</td>
+                    <td>@debt.Description</td>
+                    <td>@debt.CreatedDate.ToShortDateString()</td>
+                    <td><input type="submit" value="Paid" /></td>
+                
+                </tr>
+            }
+        }
+        <tr>
+            <td colspan="4" style="text-align: center"><b>I Need to Pay</b></td>
+        </tr>
+        @foreach (var debt in Model.DebtsIOweToPeople)
+        {
+            <tr>
+                <td>@debt.Person.Name</td>
+                <td>@String.Format("{0:C}", debt.Amount)</td>
+                <td>@debt.Description</td>
+                <td>@debt.CreatedDate.ToShortDateString()</td>
+            </tr>
+
+        }
+    </table>
+    <br/>
+    <br/>
+    
+    @Html.ActionLink("Create Debt", "CreateDebt", "Home")
+
+
