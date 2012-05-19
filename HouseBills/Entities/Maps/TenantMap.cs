@@ -8,7 +8,6 @@ namespace HouseBills.Entities.Maps
         {
             Id(x => x.Id);
             Map(x => x.Name);
-            HasMany(x => x.Debts).Cascade.AllDeleteOrphan();
         }
     }
 }

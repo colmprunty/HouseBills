@@ -1,9 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <parameters>
-  <parameter name="OfflineConnectionString-Web.config Connection String" description="OfflineConnectionString Connection String used in web.config by the application to access the database." defaultvalue="server=COLM-PC\SQLEXPRESS;database=HouseholdBills;Integrated Security=SSPI" tags="SqlConnectionString">
-    <parameterEntry kind="XmlFile" scope="C:\\Code\\Projects\\HouseBills\\HouseBills\\obj\\Debug\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='OfflineConnectionString']/@connectionString" />
-  </parameter>
   <parameter name="DefaultConnectionString-Web.config Connection String" description="DefaultConnectionString Connection String used in web.config by the application to access the database." defaultvalue="Data Source=tcp:esql2k802.discountasp.net;Initial Catalog=SQL2008_735890_cpdb;User ID=SQL2008_735890_cpdb_user;Password=sqlConnectPass;" tags="SqlConnectionString">
-    <parameterEntry kind="XmlFile" scope="C:\\Code\\Projects\\HouseBills\\HouseBills\\obj\\Debug\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='DefaultConnectionString']/@connectionString" />
+    <parameterEntry kind="XmlFile" scope="C:\\Code\\Git\\HouseBills\\HouseBills\\obj\\Debug\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='DefaultConnectionString']/@connectionString" />
   </parameter>
 </parameters>

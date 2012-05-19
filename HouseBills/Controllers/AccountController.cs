@@ -23,13 +23,9 @@ namespace HouseBills.Controllers
                 var userCount = (from p in session.Query<Tenant>() where p.Name == model.Name select p).Count();
                 if (userCount == 1)
                 {
-                    var user = (from p in session.Query<Tenant>() where p.Name == model.Name select p).First();
                     FormsAuthentication.SetAuthCookie(model.Name, false);
-                    var userModel = user.GetDebtModel();
-                    userModel.DebtsIOweToPeople = (from d in session.Query<Debt>() where d.Debtor.Id == user.Id && !d.Paid select d).ToList();
-
-                    Session["Model"] = userModel;
-                    return RedirectToAction("Index", "Debt");
+                    var userModel = CreateUserModel(session, model.Name);
+                    return View("Index", userModel);
                 }
 
                 return RedirectToAction("LogIn");

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using HouseBills.Dto;
 using HouseBills.Entities;
 
 namespace HouseBills.Models
@@ -18,9 +19,12 @@ namespace HouseBills.Models
         {
             DebtsOwedToMe = new List<Debt>();
             DebtsIOweToPeople = new List<Debt>();
+            Breakdown = new List<BreakdownDto>();
         }
 
-        public List<Debt> DebtsOwedToMe { get; set; } 
+        public List<Debt> DebtsOwedToMe { get; set; }
         public List<Debt> DebtsIOweToPeople { get; set; }
+        public List<BreakdownDto> Breakdown { get; set; }
+        public int PersonId { get; set; }
     }
 }

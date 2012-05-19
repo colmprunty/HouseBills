@@ -9,15 +9,38 @@ namespace HouseBills.Controllers
 {
     public class DebtController : ControllerBase
     {
-        public ActionResult Index()
+        public ActionResult Index(UserModel model)
         {
-            var model = Session["Model"];
+            //var model = Session["Model"];
             return View(model);
         }
 
         public ActionResult CreateDebt()
         {
             return View();
+        }
+
+        public ActionResult ConsolidateDebts(int debtorId, int personId)
+        {
+            var factory = CreateSessionFactory();
+            using (var session = factory.OpenSession())
+            {
+                var user = (from p in session.Query<Tenant>() where p.Id == personId select p).First();
+                var debts = (from d in session.Query<Debt>() where 
+                                 (d.Person.Id == personId && d.Debtor.Id == debtorId) ||
+                                 (d.Debtor.Id == personId && d.Person.Id == debtorId)
+                             select d).ToList();
+                foreach (var debt in debts)
+                {
+                    debt.Paid = true;
+                    session.Save(debt);
+                }
+
+                session.Flush();
+                return View("Index", CreateUserModel(session, user.Name ));
+            }
+
+            
         }
 
         [HttpPost]
@@ -31,8 +54,7 @@ namespace HouseBills.Controllers
                 session.Save(debt);
                 session.Flush();
                 var person = (from p in session.Query<Tenant>() where p.Id == debt.Person.Id select p).Single();
-                var model = person.GetDebtModel();
-
+                var model = CreateUserModel(session, person.Name);
                 return View("Index", model);
             }
         }
@@ -59,14 +81,12 @@ namespace HouseBills.Controllers
                     };
 
                     session.Save(debt);
-                    debtOwner.AddDebt(debt);
                     session.Save(debtor);
                 }
 
                 session.Flush();
 
-                var userModel = debtOwner.GetDebtModel();
-                userModel.DebtsIOweToPeople = (from d in session.Query<Debt>() where d.Debtor.Id == debtOwner.Id && !d.Paid select d).ToList();
+                var userModel = CreateUserModel(session, debtOwner.Name);
 
                 return View("Index", userModel);
             }
