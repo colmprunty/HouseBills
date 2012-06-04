@@ -11,7 +11,9 @@ namespace HouseBills.Controllers
     {
         public ActionResult Index(UserModel model)
         {
-            //var model = Session["Model"];
+            var people = from p in NhSession.Query<Tenant>() where p.Name != CurrentUser.Name select p;
+            model.People = (from person in people select new SelectListItem() { Text = person.Name, Value = person.Id.ToString() }).ToList();
+            
             return View(model);
         }
 

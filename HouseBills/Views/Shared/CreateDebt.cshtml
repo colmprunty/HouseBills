@@ -1,14 +1,7 @@
 ﻿@model HouseBills.Models.DebtModel 
-
-<h2>Create Debt For One Person</h2>
-
-@using (Html.BeginForm())
+@using (Html.BeginForm("CreateDebt", "Debt"))
 {
     <table>
-        <tr>
-            <td>Person: </td>
-            <td>@Html.DropDownListFor(x => x.PersonId, Model.People)</td>
-        </tr>
         <tr>
             <td>Amount: </td>
             <td>@Html.TextBoxFor(x => x.Amount)</td>
