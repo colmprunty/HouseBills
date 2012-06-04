@@ -1,6 +1,6 @@
 ﻿@model HouseBills.Models.UserModel
            
-<h2>Bills Bills Bills</h2>
+<h2>Intra-House Financial Restitution Automator</h2>
 <script type="text/javascript">
     $(function () {
         $("#tabs").tabs();
@@ -55,7 +55,8 @@
         <br/>
         <br/>
     
-        @Html.ActionLink("Create Debt", "CreateDebt", "Debt")
+        @Html.ActionLink("Create Debt For Everyone", "CreateDebt", "Debt") <br/>
+        @Html.ActionLink("Create Debt For One Person", "CreateDebtForOnePerson", "Debt")
     </div>
     <div id="breakdown">
         <table>
@@ -69,25 +70,26 @@
                 using (Html.BeginForm("ConsolidateDebts", "Debt", new { debtorId = breakdown.Person.Id, personId = Model.PersonId}))
                 {
 
-                <tr>
-                    <td>@breakdown.Person.Name</td>
-                    <td>@String.Format("{0:C}", breakdown.Total)</td>
-                    <td>@if (breakdown.Total > 0)
-                        {
-                            <input type="submit" value="Paid" />
-                        }
-                        else if(breakdown.Total == 0)
-                        {
-                            <span>:)</span>
-                        }
-                        else
-                        {
-                            <span>:(</span>
-                        }
-                    </td>
-                </tr>
+                    <tr>
+                        <td>@breakdown.Person.Name</td>
+                        <td>@String.Format("{0:C}", breakdown.Total)</td>
+                        <td>@if (breakdown.Total > 0)
+                            {
+                                <input type="submit" value="Paid" />
+                            }
+                            else if(breakdown.Total == 0)
+                            {
+                                <span>:)</span>
+                            }
+                            else
+                            {
+                                <span>:(</span>
+                            }
+                        </td>
+                    </tr>
                 }
             }
         </table>
     </div>
+
 </div>

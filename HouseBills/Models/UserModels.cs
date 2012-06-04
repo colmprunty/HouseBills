@@ -20,10 +20,12 @@ namespace HouseBills.Models
             DebtsOwedToMe = new List<Debt>();
             DebtsIOweToPeople = new List<Debt>();
             Breakdown = new List<BreakdownDto>();
+            PaidDebts = new List<Debt>();
         }
 
         public List<Debt> DebtsOwedToMe { get; set; }
         public List<Debt> DebtsIOweToPeople { get; set; }
+        public List<Debt> PaidDebts { get; set; } 
         public List<BreakdownDto> Breakdown { get; set; }
         public int PersonId { get; set; }
     }

@@ -22,77 +22,87 @@ namespace HouseBills.Controllers
 
         public ActionResult ConsolidateDebts(int debtorId, int personId)
         {
-            var factory = CreateSessionFactory();
-            using (var session = factory.OpenSession())
-            {
-                var user = (from p in session.Query<Tenant>() where p.Id == personId select p).First();
-                var debts = (from d in session.Query<Debt>() where 
-                                 (d.Person.Id == personId && d.Debtor.Id == debtorId) ||
-                                 (d.Debtor.Id == personId && d.Person.Id == debtorId)
-                             select d).ToList();
-                foreach (var debt in debts)
-                {
-                    debt.Paid = true;
-                    session.Save(debt);
-                }
+            var debts = (from d in NhSession.Query<Debt>()
+                         where 
+                                (d.Person.Id == personId && d.Debtor.Id == debtorId) ||
+                                (d.Debtor.Id == personId && d.Person.Id == debtorId)
+                            select d).ToList();
 
-                session.Flush();
-                return View("Index", CreateUserModel(session, user.Name ));
+            foreach (var debt in debts)
+            {
+                debt.Paid = true;
+                NhSession.Save(debt);
             }
 
-            
+            return View("Index", CreateUserModel(NhSession, CurrentUser.Name));
         }
 
         [HttpPost]
         public ActionResult ReceiveDebt(int debtId)
         {
-            var factory = CreateSessionFactory();
-            using (var session = factory.OpenSession())
-            {
-                var debt = (from d in session.Query<Debt>() where d.Id == debtId select d).Single();
+                var debt = (from d in NhSession.Query<Debt>() where d.Id == debtId select d).Single();
                 debt.Paid = true;
-                session.Save(debt);
-                session.Flush();
-                var person = (from p in session.Query<Tenant>() where p.Id == debt.Person.Id select p).Single();
-                var model = CreateUserModel(session, person.Name);
+                NhSession.Save(debt);
+                var model = CreateUserModel(NhSession, CurrentUser.Name);
                 return View("Index", model);
-            }
+            
+        }
+
+        public ActionResult CreateDebtForOnePerson()
+        {
+            var people = from p in NhSession.Query<Tenant>() where p.Name != CurrentUser.Name select p;
+            var model = new DebtModel { People = (from person in people select new SelectListItem(){ Text = person.Name, Value = person.Id.ToString()}).ToList() };
+            
+            return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult CreateDebtForOnePerson(DebtModel model)
+        {
+                var debtor = (from p in NhSession.Query<Tenant>() where p.Id == model.PersonId select p).First();
+
+                var debt = new Debt
+                               {
+                                   Amount = model.Amount,
+                                   CreatedDate = DateTime.Now,
+                                   Debtor = debtor,
+                                   Description = model.Description,
+                                   Person = CurrentUser,
+                                   Paid = false
+                               };
+
+                NhSession.Save(debt);
+
+                var indexModel = CreateUserModel(NhSession, CurrentUser.Name);
+                return View("Index", indexModel);
+            
         }
 
         [HttpPost]
         public ActionResult CreateDebt(DebtModel model)
         {
-            var factory = CreateSessionFactory();
-            using (var session = factory.OpenSession())
+            var debtOwner = (from p in NhSession.Query<Tenant>() where p.Name == CurrentUser.Name select p).First();
+            var debtors = (from p in NhSession.Query<Tenant>() where p.Id != debtOwner.Id select p);
+
+            foreach (var debtor in debtors)
             {
-                var debtOwner = (from p in session.Query<Tenant>() where p.Name == User.Identity.Name select p).First();
-                var debtors = (from p in session.Query<Tenant>() where p.Id != debtOwner.Id select p);
-
-                foreach (var debtor in debtors)
+                var debt = new Debt
                 {
-                    var debt = new Debt
-                    {
-                        Amount = model.Amount / 4,
-                        Description = model.Description,
-                        Debtor = debtor,
-                        Paid = false,
-                        Person = debtOwner,
-                        CreatedDate = DateTime.Now
-                    };
+                    Amount = model.Amount / 4,
+                    Description = model.Description,
+                    Debtor = debtor,
+                    Paid = false,
+                    Person = debtOwner,
+                    CreatedDate = DateTime.Now
+                };
 
-                    session.Save(debt);
-                    session.Save(debtor);
-                }
-
-                session.Flush();
-
-                var userModel = CreateUserModel(session, debtOwner.Name);
-
-                return View("Index", userModel);
+                NhSession.Save(debt);
+                NhSession.Save(debtor);
             }
+
+            var userModel = CreateUserModel(NhSession, CurrentUser.Name);
+
+            return View("Index", userModel);
         }
-
-        
     }
-
 }

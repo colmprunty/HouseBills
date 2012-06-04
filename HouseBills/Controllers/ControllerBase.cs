@@ -13,6 +13,23 @@ namespace HouseBills.Controllers
 {
     public class ControllerBase : Controller
     {
+        public ISession NhSession { get; set; }
+        public Tenant CurrentUser { get; set; }
+
+        protected override void OnActionExecuting(ActionExecutingContext filterContext)
+        {
+            NhSession = CreateSessionFactory().OpenSession();
+            CurrentUser = User == null ? null : (from p in NhSession.Query<Tenant>() where p.Name == User.Identity.Name select p).SingleOrDefault();
+            base.OnActionExecuting(filterContext);
+        }
+
+        protected override void OnActionExecuted(ActionExecutedContext filterContext)
+        {
+            NhSession.Flush();
+            NhSession.Close();
+            base.OnActionExecuted(filterContext);
+        }
+
         public ISessionFactory CreateSessionFactory()
         {
             return Fluently.Configure()
@@ -26,12 +43,14 @@ namespace HouseBills.Controllers
 
         public UserModel CreateUserModel(ISession session, string name)
         {
+            session.Flush();
             var userModel = new UserModel();
             var user = (from p in session.Query<Tenant>() where p.Name == name select p).First();
             var otherUsers = (from p in session.Query<Tenant>() where p.Name != name select p);
             var allDebts = (from d in session.Query<Debt>() select d);
             userModel.DebtsOwedToMe = (from d in session.Query<Debt>() where d.Person.Id == user.Id && !d.Paid select d).ToList();
             userModel.DebtsIOweToPeople = (from d in session.Query<Debt>() where d.Debtor.Id == user.Id && !d.Paid select d).ToList();
+            userModel.PaidDebts = (from d in session.Query<Debt>() where d.Person.Id == user.Id && d.Paid select d).ToList();
 
             foreach (var person in otherUsers)
             {

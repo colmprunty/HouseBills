@@ -17,20 +17,16 @@ namespace HouseBills.Controllers
         [HttpPost]
         public ActionResult LogIn(LoginModel model)
         {
-            var factory = CreateSessionFactory();
-            using(var session = factory.OpenSession())
+            var userCount = (from p in NhSession.Query<Tenant>() where p.Name == model.Name select p).Count();
+            if (userCount == 1)
             {
-                var userCount = (from p in session.Query<Tenant>() where p.Name == model.Name select p).Count();
-                if (userCount == 1)
-                {
-                    FormsAuthentication.SetAuthCookie(model.Name, false);
-                    var userModel = CreateUserModel(session, model.Name);
-                    return View("Index", userModel);
-                }
-
-                return RedirectToAction("LogIn");
+                FormsAuthentication.SetAuthCookie(model.Name, false);
+                var userModel = CreateUserModel(NhSession, model.Name);
+                return View("Index", userModel);
             }
-        }
+
+            return RedirectToAction("LogIn");
+        }   
 
         public ActionResult LogOff()
         {
