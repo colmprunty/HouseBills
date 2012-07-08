@@ -52,7 +52,7 @@ namespace HouseBills.Controllers
 
         public ActionResult CreateDebtForOnePerson()
         {
-            var people = from p in NhSession.Query<Tenant>() where p.Name != CurrentUser.Name select p;
+            var people = from p in NhSession.Query<Tenant>() where p.Name != CurrentUser.Name && p.Instance == CurrentUser.Instance && !p.Archived select p;
             var model = new DebtModel { People = (from person in people select new SelectListItem(){ Text = person.Name, Value = person.Id.ToString()}).ToList() };
             
             return View(model);
@@ -84,13 +84,13 @@ namespace HouseBills.Controllers
         public ActionResult CreateDebt(DebtModel model)
         {
             var debtOwner = (from p in NhSession.Query<Tenant>() where p.Name == CurrentUser.Name select p).First();
-            var debtors = (from p in NhSession.Query<Tenant>() where p.Id != debtOwner.Id select p);
+            var debtors = (from p in NhSession.Query<Tenant>() where p.Id != debtOwner.Id && p.Instance == debtOwner.Instance  && !p.Archived select p);
 
             foreach (var debtor in debtors)
             {
                 var debt = new Debt
                 {
-                    Amount = model.Amount / 4,
+                    Amount = model.Amount / (debtors.Count() + 1),
                     Description = model.Description,
                     Debtor = debtor,
                     Paid = false,
@@ -105,6 +105,11 @@ namespace HouseBills.Controllers
             var userModel = CreateUserModel(NhSession, CurrentUser.Name);
 
             return View("Index", userModel);
+        }
+
+        public PartialViewResult UserAdmin()
+        {
+            return PartialView();
         }
     }
 }

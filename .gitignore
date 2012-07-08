@@ -47,3 +47,5 @@ obj/
 Ankh.NoLoad
 *.suo
 *.dll
+*/bin/
+*/bin/*

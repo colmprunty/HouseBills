@@ -1,10 +1,6 @@
 ﻿using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
-using FluentNHibernate.Cfg;
-using FluentNHibernate.Cfg.Db;
-using HouseBills.Entities.Maps;
-using NHibernate;
 
 namespace HouseBills
 {

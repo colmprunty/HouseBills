@@ -23,12 +23,12 @@ namespace HouseBills.Controllers
                 FormsAuthentication.SetAuthCookie(model.Name, false);
                 var userModel = CreateUserModel(NhSession, model.Name);
                 var people = from p in NhSession.Query<Tenant>() where p.Name != model.Name select p;
-                userModel.People = (from person in people select new SelectListItem() { Text = person.Name, Value = person.Id.ToString() }).ToList();
+                userModel.People = (from person in people select new SelectListItem { Text = person.Name, Value = person.Id.ToString() }).ToList();
                 return View("Index", userModel);
             }
 
             return RedirectToAction("LogIn");
-        }   
+        }
 
         public ActionResult LogOff()
         {

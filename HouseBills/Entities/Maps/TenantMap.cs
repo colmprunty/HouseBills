@@ -8,6 +8,8 @@ namespace HouseBills.Entities.Maps
         {
             Id(x => x.Id);
             Map(x => x.Name);
+            Map(x => x.Instance);
+            Map(x => x.Archived);
         }
     }
 }
