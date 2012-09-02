@@ -11,8 +11,9 @@ namespace HouseBills.Controllers
     {
         public ActionResult Index(UserModel model)
         {
-            var people = from p in NhSession.Query<Tenant>() where p.Name != CurrentUser.Name select p;
-            model.People = (from person in people select new SelectListItem() { Text = person.Name, Value = person.Id.ToString() }).ToList();
+            var people = from p in NhSession.Query<Tenant>() where p.Name != CurrentUser.Name && p.Instance == model.InstanceId && !p.Archived select p;
+            model.People = (from person in people select new SelectListItem { Text = person.Name, Value = person.Id.ToString() }).ToList();
+            model.Tenants = (from p in NhSession.Query<Tenant>() where p.Instance == model.InstanceId && !p.Archived select p).ToList();
             
             return View(model);
         }
@@ -107,9 +108,14 @@ namespace HouseBills.Controllers
             return View("Index", userModel);
         }
 
-        public PartialViewResult UserAdmin()
+        [HttpPost]
+        public ActionResult ArchivePerson(int personId)
         {
-            return PartialView();
+            var person = (from p in NhSession.Query<Tenant>() where p.Id == personId select p).Single();
+            person.Archived = true;
+
+            var userModel = CreateUserModel(NhSession, CurrentUser.Name);
+            return View("Index", userModel);
         }
     }
 }

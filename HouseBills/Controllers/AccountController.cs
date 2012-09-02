@@ -22,8 +22,9 @@ namespace HouseBills.Controllers
             {
                 FormsAuthentication.SetAuthCookie(model.Name, false);
                 var userModel = CreateUserModel(NhSession, model.Name);
-                var people = from p in NhSession.Query<Tenant>() where p.Name != model.Name select p;
+                var people = (from p in NhSession.Query<Tenant>() where p.Name != model.Name && p.Instance == userModel.InstanceId && !p.Archived select p);
                 userModel.People = (from person in people select new SelectListItem { Text = person.Name, Value = person.Id.ToString() }).ToList();
+                userModel.Tenants = (from p in NhSession.Query<Tenant>() where p.Instance == userModel.InstanceId && !p.Archived select p).ToList();
                 return View("Index", userModel);
             }
 

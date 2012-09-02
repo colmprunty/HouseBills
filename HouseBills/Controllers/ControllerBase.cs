@@ -46,7 +46,7 @@ namespace HouseBills.Controllers
             session.Flush();
             var userModel = new UserModel();
             var user = (from p in session.Query<Tenant>() where p.Name == name select p).First();
-            var otherUsers = (from p in session.Query<Tenant>() where p.Name != name select p);
+            var otherUsers = (from p in session.Query<Tenant>() where p.Name != name && p.Instance == user.Instance select p);
             var allDebts = (from d in session.Query<Debt>() select d);
             userModel.DebtsOwedToMe = (from d in session.Query<Debt>() where d.Person.Id == user.Id && !d.Paid select d).ToList();
             userModel.DebtsIOweToPeople = (from d in session.Query<Debt>() where d.Debtor.Id == user.Id && !d.Paid select d).ToList();
@@ -61,6 +61,8 @@ namespace HouseBills.Controllers
             }
 
             userModel.PersonId = user.Id;
+            userModel.InstanceId = user.Instance;
+            userModel.Tenants = (from p in NhSession.Query<Tenant>() where p.Instance == user.Instance && !p.Archived select p).ToList();
             return userModel;
         }
     }

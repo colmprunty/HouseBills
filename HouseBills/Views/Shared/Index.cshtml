@@ -1,5 +1,5 @@
 ﻿@using HouseBills.Models
-@model HouseBills.Models.UserModel
+@model UserModel
            
 <h2>Intra-House Financial Restitution Automator</h2>
 <script type="text/javascript">
@@ -13,7 +13,8 @@
         <li><a href="#breakdown">Breakdown</a></li>
         <li><a href="#createAll">Create All</a></li>
         <li><a href="#createOne">Create One</a></li>
-        <li><a href="#userAdmin">User Admin</a></li>
+        <li><a href="#killSomeone">Kill Someone</a></li>
+        <li><a href="#addSomeone">Add Someone</a></li>
     </ul>
     <br />
     <br />
@@ -99,8 +100,11 @@
     <div id="createAll">
         @Html.Partial("CreateDebt", new DebtModel() )
     </div>
-    <div id="userAdmin">
-        @Html.Partial("UserAdmin")
+    <div id="killSomeone">
+        @Html.Partial("UserAdmin", new UserAdminModel { Tenants = Model.Tenants })
+    </div>
+    <div id="addSomeone">
+        
     </div>
 
 </div>

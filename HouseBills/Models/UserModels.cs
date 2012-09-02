@@ -30,6 +30,8 @@ namespace HouseBills.Models
         public List<Debt> PaidDebts { get; set; } 
         public List<BreakdownDto> Breakdown { get; set; }
         public int PersonId { get; set; }
+        public int InstanceId { get; set; }
         public List<SelectListItem> People { get; set; }
+        public List<Tenant> Tenants { get; set; } 
     }
 }

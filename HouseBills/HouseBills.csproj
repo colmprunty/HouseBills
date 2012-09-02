@@ -110,6 +110,7 @@
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Entities\Tenant.cs" />
     <Compile Include="Models\DebtModel.cs" />
+    <Compile Include="Models\UserAdminModel.cs" />
     <Compile Include="Models\UserModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
