@@ -1,0 +1,18 @@
+﻿@model HouseBills.Models.DebtModel 
+@using (Html.BeginForm("CreateDebt", "Debt"))
+{
+    <table>
+        <tr>
+            <td>Amount: </td>
+            <td>@Html.TextBoxFor(x => x.Amount)</td>
+        </tr>
+        <tr>
+            <td>Description: </td>
+            <td>@Html.TextBoxFor(x => x.Description)</td>
+        </tr>
+    </table>
+    
+    <p>
+        <input type="submit" value="Create" />
+    </p>
+}

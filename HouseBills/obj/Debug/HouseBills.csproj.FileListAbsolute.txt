@@ -59,6 +59,6 @@ C:\Code\Git\HouseBills\HouseBills\bin\System.Web.WebPages.xml
 C:\Code\Git\HouseBills\HouseBills\bin\System.Web.Helpers.xml
 C:\Code\Git\HouseBills\HouseBills\bin\System.Web.WebPages.Deployment.xml
 C:\Code\Git\HouseBills\HouseBills\bin\System.Web.WebPages.Razor.xml
-C:\Code\Git\HouseBills\HouseBills\obj\Debug\ResolveAssemblyReference.cache
 C:\Code\Git\HouseBills\HouseBills\obj\Debug\HouseBills.dll
 C:\Code\Git\HouseBills\HouseBills\obj\Debug\HouseBills.pdb
+C:\Code\Git\HouseBills\HouseBills\obj\Debug\HouseBills.csprojResolveAssemblyReference.cache

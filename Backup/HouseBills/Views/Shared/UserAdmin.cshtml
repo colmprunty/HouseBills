@@ -1,0 +1,21 @@
+﻿@model HouseBills.Models.UserAdminModel
+
+<div id="userList">
+    <table style="width: 85%">
+            <tr >
+                <th>Person</th>
+                <th>Actions</th>
+            </tr>
+
+        @foreach (var person in Model.Tenants.OrderBy(x => x.Name))
+        {
+            using (Html.BeginForm("ArchivePerson", "Debt", new { personId = person.Id }))
+            {
+                <tr>
+                    <td>@person.Name</td>
+                    <td><input type="submit" value="Delete" /></td>
+                </tr>
+            }
+        }
+        </table>
+</div>

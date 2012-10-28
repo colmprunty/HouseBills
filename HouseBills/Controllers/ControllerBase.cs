@@ -35,7 +35,7 @@ namespace HouseBills.Controllers
             return Fluently.Configure()
             .Database(MsSqlConfiguration
             .MsSql2008
-            .ConnectionString(c => c.FromConnectionStringWithKey("OfflineConnectionString")))
+            .ConnectionString(c => c.FromConnectionStringWithKey("DefaultConnectionString")))
                 .Mappings(m => m.FluentMappings
                 .AddFromAssemblyOf<TenantMap>())
             .BuildSessionFactory();
