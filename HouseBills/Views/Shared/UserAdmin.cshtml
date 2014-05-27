@@ -1,11 +1,12 @@
 ﻿@model HouseBills.Models.UserAdminModel
 
 <div id="userList">
+    <div>Deleting a person will not remove their existing debts, but will not include them in the creation of any future debts.</div>
     <table style="width: 85%">
-            <tr >
-                <th>Person</th>
-                <th>Actions</th>
-            </tr>
+        <tr >
+            <th>Person</th>
+            <th>Actions</th>
+        </tr>
 
         @foreach (var person in Model.Tenants.OrderBy(x => x.Name))
         {
@@ -17,5 +18,12 @@
                 </tr>
             }
         }
-        </table>
+    </table>
+    <div id="create">
+        @using (Html.BeginForm("CreatePerson", "Debt"))
+        {
+            @Html.TextBoxFor(x => x.NewUserName)
+            <input type="submit" value="Play God"/>
+        }
+    </div>
 </div>

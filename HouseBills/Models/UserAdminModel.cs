@@ -6,5 +6,6 @@ namespace HouseBills.Models
     public class UserAdminModel
     {
         public List<Tenant> Tenants { get; set; }
+        public string NewUserName { get; set; }
     }
 }

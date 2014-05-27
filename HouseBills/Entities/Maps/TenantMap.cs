@@ -6,7 +6,7 @@ namespace HouseBills.Entities.Maps
     {
         public TenantMap()
         {
-            Id(x => x.Id);
+            Id(x => x.Id).GeneratedBy.Increment();
             Map(x => x.Name);
             Map(x => x.Instance);
             Map(x => x.Archived);

@@ -117,5 +117,14 @@ namespace HouseBills.Controllers
             var userModel = CreateUserModel(NhSession, CurrentUser.Name);
             return View("Index", userModel);
         }
+
+        [HttpPost]
+        public ActionResult CreatePerson(string newUserName)
+        {
+            var newPerson = new Tenant(newUserName){ Instance = CurrentUser.Instance};
+            NhSession.Save(newPerson);
+            var userModel = CreateUserModel(NhSession, CurrentUser.Name);
+            return View("Index", userModel);
+        }
     }
 }

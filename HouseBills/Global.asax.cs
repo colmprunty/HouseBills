@@ -29,7 +29,6 @@ namespace HouseBills
 
             RegisterGlobalFilters(GlobalFilters.Filters);
             RegisterRoutes(RouteTable.Routes);
-
         }
 
         

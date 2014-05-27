@@ -25,6 +25,7 @@
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
+    <MvcProjectUpgradeChecked>true</MvcProjectUpgradeChecked>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -109,7 +110,6 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ControllerBase.cs" />
     <Compile Include="Controllers\DebtController.cs" />
-    <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Dto\BreakdownDto.cs" />
     <Compile Include="Entities\Debt.cs" />
     <Compile Include="Entities\Maps\DebtMap.cs" />
@@ -257,6 +257,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\PublishProfiles\amazon.pubxml" />
+    <None Include="Properties\PublishProfiles\FileSystem.pubxml" />
     <None Include="Properties\PublishProfiles\Profile1.pubxml" />
   </ItemGroup>
   <PropertyGroup>
