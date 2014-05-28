@@ -2,6 +2,10 @@
 @model UserModel
            
 <h2>Intra-House Financial Restitution Automator</h2>
+@if (!string.IsNullOrEmpty(Model.Message))
+{
+    <h3 style="color:red">@Model.Message</h3>
+}
 <script type="text/javascript">
     $(function () {
         $("#tabs").tabs();

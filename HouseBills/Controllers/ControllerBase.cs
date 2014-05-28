@@ -35,7 +35,7 @@ namespace HouseBills.Controllers
             return Fluently.Configure()
             .Database(MsSqlConfiguration
             .MsSql2008
-            .ConnectionString(c => c.FromConnectionStringWithKey("OfflineConnectionString")))
+            .ConnectionString(c => c.FromConnectionStringWithKey("DefaultConnectionString")))
                 .Mappings(m => m.FluentMappings
                 .AddFromAssemblyOf<TenantMap>())
             .BuildSessionFactory();
@@ -57,12 +57,17 @@ namespace HouseBills.Controllers
                 var iNeedToPay = allDebts.ToList().Where(x => x.Debtor.Id == user.Id && x.Person.Id == person.Id && !x.Paid).Sum(y => y.Amount);
                 var owedToMe = allDebts.ToList().Where(x => x.Person.Id == user.Id && x.Debtor.Id == person.Id && !x.Paid).Sum(y => y.Amount);
 
+                if(iNeedToPay == 0 && owedToMe == 0 && person.Archived)
+                    continue;
+
                 userModel.Breakdown.Add(new BreakdownDto { Person = person, Total = owedToMe - iNeedToPay });
             }
 
             userModel.PersonId = user.Id;
             userModel.InstanceId = user.Instance;
             userModel.Tenants = (from p in NhSession.Query<Tenant>() where p.Instance == user.Instance && !p.Archived select p).ToList();
+            var people = (from p in NhSession.Query<Tenant>() where p.Name != name && p.Instance == userModel.InstanceId && !p.Archived select p).ToList();
+            userModel.People = (from person in people select new SelectListItem { Text = person.Name, Value = person.Id.ToString() }).ToList();
             return userModel;
         }
     }

@@ -22,6 +22,7 @@
     <div id="create">
         @using (Html.BeginForm("CreatePerson", "Debt"))
         {
+            @Html.Label("Create a new person: ")
             @Html.TextBoxFor(x => x.NewUserName)
             <input type="submit" value="Play God"/>
         }

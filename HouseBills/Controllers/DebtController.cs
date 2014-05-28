@@ -9,11 +9,10 @@ namespace HouseBills.Controllers
 {
     public class DebtController : ControllerBase
     {
-        public ActionResult Index(UserModel model)
+        public ActionResult Index(string message)
         {
-            var people = from p in NhSession.Query<Tenant>() where p.Name != CurrentUser.Name && p.Instance == model.InstanceId && !p.Archived select p;
-            model.People = (from person in people select new SelectListItem { Text = person.Name, Value = person.Id.ToString() }).ToList();
-            model.Tenants = (from p in NhSession.Query<Tenant>() where p.Instance == model.InstanceId && !p.Archived select p).ToList();
+            var model = CreateUserModel(NhSession, CurrentUser.Name);
+            model.Message = message;
             
             return View(model);
         }
@@ -37,18 +36,16 @@ namespace HouseBills.Controllers
                 NhSession.Save(debt);
             }
 
-            return View("Index", CreateUserModel(NhSession, CurrentUser.Name));
+            return RedirectToAction("Index");
         }
 
         [HttpPost]
         public ActionResult ReceiveDebt(int debtId)
         {
-                var debt = (from d in NhSession.Query<Debt>() where d.Id == debtId select d).Single();
-                debt.Paid = true;
-                NhSession.Save(debt);
-                var model = CreateUserModel(NhSession, CurrentUser.Name);
-                return View("Index", model);
-            
+            var debt = (from d in NhSession.Query<Debt>() where d.Id == debtId select d).Single();
+            debt.Paid = true;
+            NhSession.Save(debt);
+            return RedirectToAction("Index");
         }
 
         public ActionResult CreateDebtForOnePerson()
@@ -62,23 +59,21 @@ namespace HouseBills.Controllers
         [HttpPost]
         public ActionResult CreateDebtForOnePerson(DebtModel model)
         {
-                var debtor = (from p in NhSession.Query<Tenant>() where p.Id == model.PersonId select p).First();
+            var debtor = (from p in NhSession.Query<Tenant>() where p.Id == model.PersonId select p).First();
 
-                var debt = new Debt
-                               {
-                                   Amount = model.Amount,
-                                   CreatedDate = DateTime.Now,
-                                   Debtor = debtor,
-                                   Description = model.Description,
-                                   Person = CurrentUser,
-                                   Paid = false
-                               };
+            var debt = new Debt
+                       {
+                           Amount = model.Amount,
+                           CreatedDate = DateTime.Now,
+                           Debtor = debtor,
+                           Description = model.Description,
+                           Person = CurrentUser,
+                           Paid = false
+                       };
 
-                NhSession.Save(debt);
+            NhSession.Save(debt);
 
-                var indexModel = CreateUserModel(NhSession, CurrentUser.Name);
-                return View("Index", indexModel);
-            
+            return RedirectToAction("Index");
         }
 
         [HttpPost]
@@ -103,9 +98,7 @@ namespace HouseBills.Controllers
                 NhSession.Save(debtor);
             }
 
-            var userModel = CreateUserModel(NhSession, CurrentUser.Name);
-
-            return View("Index", userModel);
+            return RedirectToAction("Index");
         }
 
         [HttpPost]
@@ -114,17 +107,24 @@ namespace HouseBills.Controllers
             var person = (from p in NhSession.Query<Tenant>() where p.Id == personId select p).Single();
             person.Archived = true;
 
-            var userModel = CreateUserModel(NhSession, CurrentUser.Name);
-            return View("Index", userModel);
+            return RedirectToAction("Index");
         }
 
         [HttpPost]
         public ActionResult CreatePerson(string newUserName)
         {
             var newPerson = new Tenant(newUserName){ Instance = CurrentUser.Instance};
+            var alreadyExists = NhSession.Query<Tenant>().Where(x => x.Name == newUserName);
+            
+            if (alreadyExists.Any())
+            {
+                var message = "There's already a user called " + newUserName + ".";
+                return RedirectToAction("Index", message);
+            }
+
             NhSession.Save(newPerson);
-            var userModel = CreateUserModel(NhSession, CurrentUser.Name);
-            return View("Index", userModel);
+            
+            return RedirectToAction("Index");
         }
     }
 }

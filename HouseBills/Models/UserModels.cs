@@ -5,9 +5,7 @@ using HouseBills.Entities;
 
 namespace HouseBills.Models
 {
-    public class UserModels
-    {
-    }
+    public class UserModels{ }
 
     public class LoginModel
     {
@@ -32,6 +30,7 @@ namespace HouseBills.Models
         public int PersonId { get; set; }
         public int InstanceId { get; set; }
         public List<SelectListItem> People { get; set; }
-        public List<Tenant> Tenants { get; set; } 
+        public List<Tenant> Tenants { get; set; }
+        public string Message { get; set; }
     }
 }

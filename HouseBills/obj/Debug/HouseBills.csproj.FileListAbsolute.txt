@@ -61,4 +61,5 @@ C:\Code\Git\HouseBills\HouseBills\bin\System.Web.WebPages.Deployment.xml
 C:\Code\Git\HouseBills\HouseBills\bin\System.Web.WebPages.Razor.xml
 C:\Code\Git\HouseBills\HouseBills\obj\Debug\HouseBills.dll
 C:\Code\Git\HouseBills\HouseBills\obj\Debug\HouseBills.pdb
-C:\Code\Git\HouseBills\HouseBills\obj\Debug\HouseBills.csprojResolveAssemblyReference.cache
+C:\Code\Git\HouseBills\HouseBills\bin\HouseBills.dll.config
+C:\Code\Git\HouseBills\HouseBills\bin\Elmah.dll
