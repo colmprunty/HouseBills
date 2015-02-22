@@ -1,15 +1,14 @@
 ﻿/*----------------------------------------------------------
-The base color for this template is #5c87b2. If you'd like
+The base color for this template is #003366. If you'd like
 to use a different color start by replacing all instances of
-#5c87b2 with your new color.
+#003366 with your new color.
 ----------------------------------------------------------*/
 body {
-    background-color: #5c87b2;
+    background-color: #003366;
     font-size: .85em;
     font-family: "Trebuchet MS", Verdana, Helvetica, Sans-Serif;
     margin: 0;
     padding: 0;
-    color: #696969;
 }
 
 a:link {
@@ -71,11 +70,6 @@ h5, h6 {
     font-size: 1em;
 }
 
-/* PRIMARY LAYOUT ELEMENTS   
-----------------------------------------------------------*/
-
-/* you can specify a greater or lesser percentage for the 
-page width. Or, you can specify an exact pixel width. */
 .page {
     width: 90%;
     margin-left: auto;
@@ -125,7 +119,7 @@ footer,
 /* TAB MENU   
 ----------------------------------------------------------*/
 ul#menu {
-    border-bottom: 1px #5C87B2 solid;
+    border-bottom: 1px #003366 solid;
     padding: 0 0 2px;
     position: relative;
     margin: 0;

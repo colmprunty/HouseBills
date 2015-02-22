@@ -40,7 +40,6 @@ C:\Code\Git\HouseBills\HouseBills\bin\NHibernate.dll
 C:\Code\Git\HouseBills\HouseBills\bin\StructureMap.dll
 C:\Code\Git\HouseBills\HouseBills\bin\System.Web.Abstractions.dll
 C:\Code\Git\HouseBills\HouseBills\bin\System.Web.Helpers.dll
-C:\Code\Git\HouseBills\HouseBills\bin\System.Web.Mvc.dll
 C:\Code\Git\HouseBills\HouseBills\bin\System.Web.Razor.dll
 C:\Code\Git\HouseBills\HouseBills\bin\System.Web.Routing.dll
 C:\Code\Git\HouseBills\HouseBills\bin\System.Web.WebPages.Deployment.dll
@@ -54,12 +53,10 @@ C:\Code\Git\HouseBills\HouseBills\bin\NHibernate.xml
 C:\Code\Git\HouseBills\HouseBills\bin\StructureMap.pdb
 C:\Code\Git\HouseBills\HouseBills\bin\StructureMap.xml
 C:\Code\Git\HouseBills\HouseBills\bin\System.Web.Mvc.xml
-C:\Code\Git\HouseBills\HouseBills\bin\System.Web.Razor.xml
-C:\Code\Git\HouseBills\HouseBills\bin\System.Web.WebPages.xml
-C:\Code\Git\HouseBills\HouseBills\bin\System.Web.Helpers.xml
-C:\Code\Git\HouseBills\HouseBills\bin\System.Web.WebPages.Deployment.xml
-C:\Code\Git\HouseBills\HouseBills\bin\System.Web.WebPages.Razor.xml
 C:\Code\Git\HouseBills\HouseBills\obj\Debug\HouseBills.dll
 C:\Code\Git\HouseBills\HouseBills\obj\Debug\HouseBills.pdb
 C:\Code\Git\HouseBills\HouseBills\bin\HouseBills.dll.config
+C:\Code\Git\HouseBills\HouseBills\obj\Debug\HouseBills.csprojResolveAssemblyReference.cache
 C:\Code\Git\HouseBills\HouseBills\bin\Elmah.dll
+C:\Code\Git\HouseBills\HouseBills\bin\nunit.framework.dll
+C:\Code\Git\HouseBills\HouseBills\bin\nunit.framework.xml

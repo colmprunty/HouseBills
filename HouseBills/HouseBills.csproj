@@ -64,6 +64,9 @@
     <Reference Include="NHibernate">
       <HintPath>..\packages\NHibernate.3.3.0.4000\lib\Net35\NHibernate.dll</HintPath>
     </Reference>
+    <Reference Include="nunit.framework">
+      <HintPath>..\packages\NUnit.2.6.4\lib\nunit.framework.dll</HintPath>
+    </Reference>
     <Reference Include="StructureMap">
       <HintPath>..\packages\structuremap.2.6.3\lib\StructureMap.dll</HintPath>
     </Reference>
@@ -113,6 +116,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ControllerBase.cs" />
     <Compile Include="Controllers\DebtController.cs" />
+    <Compile Include="Controllers\DebugController.cs" />
     <Compile Include="Dto\BreakdownDto.cs" />
     <Compile Include="Entities\Debt.cs" />
     <Compile Include="Entities\Maps\DebtMap.cs" />
